@@ -2359,3 +2359,191 @@ body.scroll-locked {
   }
 }
 
+
+/* ═══════════════════════════════════
+   PHOTO WALL — BRIDE & GROOM
+═══════════════════════════════════ */
+.photo-wall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 4vw, 60px);
+  flex-wrap: wrap;
+  padding: clamp(12px, 2vw, 28px) clamp(16px, 4vw, 40px) clamp(28px, 5vw, 56px);
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ── photo card ── */
+.photo-card {
+  --rot: 0deg;
+  --nudge-y: 0px;
+  --scale: 1;
+  --drift-delay: 0s;
+  margin: 0;
+  flex-shrink: 0;
+  animation: photoDrift 7s ease-in-out infinite var(--drift-delay);
+}
+
+.photo-card--lg {
+  width: clamp(180px, 26vw, 240px);
+}
+
+@keyframes photoDrift {
+  0%,100% { transform: translate3d(0, 0, 0) rotate(var(--rot)) scale(var(--scale)); }
+  40%      { transform: translate3d(0, -6px, 0) rotate(calc(var(--rot) - .6deg)) scale(var(--scale)); }
+  70%      { transform: translate3d(0, 3px, 0) rotate(calc(var(--rot) + .4deg)) scale(var(--scale)); }
+}
+
+/* subtle tilt + nudge wrapper */
+.photo-card__inner {
+  transform: translate3d(0, var(--nudge-y), 0) rotate(var(--rot)) scale(var(--scale));
+  transition: transform .55s cubic-bezier(.25,.8,.25,1);
+}
+
+/* the paper mat / frame */
+.photo-card__paper {
+  position: relative;
+  padding: clamp(8px, 1.2vw, 13px);
+  border-radius: 10px;
+  background: linear-gradient(
+    165deg,
+    rgba(255,252,245,.98),
+    rgba(246,239,226,.96) 55%,
+    rgba(238,226,204,.94)
+  );
+  border: 1px solid rgba(212, 175, 55, .45);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.75) inset,
+    0 12px 32px -16px rgba(30,28,20,.32),
+    0 3px 10px rgba(30,28,20,.07);
+  transition: transform .55s ease, box-shadow .55s ease, filter .55s ease;
+}
+
+/* inset gold hairline */
+.photo-card__paper::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 7px;
+  border: 1px solid rgba(193, 150, 47, .3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* diagonal gloss sheen */
+.photo-card__paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.30),
+    transparent 42%,
+    rgba(193,150,47,.06)
+  );
+  mix-blend-mode: soft-light;
+  z-index: 2;
+}
+
+.photo-card__paper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: 4px;
+  background: rgba(230, 215, 190, .30);
+  position: relative;
+  z-index: 0;
+}
+
+/* caption below the frame */
+.photo-card__caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-top: 16px;
+  transform: rotate(calc(var(--rot) * .4));   /* gentle matching lean */
+}
+
+.photo-card__name {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--blue-deep);
+  line-height: 1;
+}
+
+.photo-card__role {
+  font-family: var(--font-caps);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* hover lift — desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .photo-card:hover .photo-card__inner {
+    transform: translate3d(0, calc(var(--nudge-y) - 10px), 0) rotate(var(--rot)) scale(1.03);
+  }
+  .photo-card:hover .photo-card__paper {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.8) inset,
+      0 28px 54px -22px rgba(30,28,20,.42),
+      0 10px 24px rgba(193,150,47,.14);
+    filter: saturate(1.05);
+  }
+}
+
+/* ampersand between cards */
+.photo-wall__amp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.photo-wall__amp-text {
+  font-family: var(--font-script);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  color: var(--blue-royal);
+  line-height: 1;
+  display: block;
+}
+
+.photo-wall__rings {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── MOBILE: stack vertically, centre everything ── */
+@media (max-width: 600px) {
+  .photo-wall {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .photo-card--lg {
+    width: clamp(200px, 72vw, 260px);
+  }
+
+  /* flatten tilt on small screens so nothing clips */
+  .photo-card__inner {
+    transform: translate3d(0, 0, 0) rotate(calc(var(--rot) * .35)) scale(1) !important;
+  }
+
+  .photo-card__caption {
+    transform: none;
+  }
+
+  .photo-wall__amp {
+    flex-direction: row;
+    gap: 10px;
+  }
+}

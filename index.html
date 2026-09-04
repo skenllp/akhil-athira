@@ -149,32 +149,45 @@
       <h2 class="section-title">Bride &amp; Groom</h2>
       <div class="divider-line"><span></span><span class="diamond">◆</span><span></span></div>
     </div>
-    <div class="couple-grid">
+
+    <div class="photo-wall">
 
       <!-- GROOM -->
-      <div class="couple-card">
-        <img src="groom.png" alt="Akhil – Groom" id="groom-img" class="couple-photo" />
-        <h3 class="couple-name">Akhil</h3>
-        <p class="couple-role">The Groom</p>
-        <div class="couple-gold-line"></div>
-      </div>
+      <figure class="photo-card photo-card--lg"
+        style="--rot:-2.8deg; --nudge-y:10px; --scale:1.01; --drift-delay:0s;">
+        <div class="photo-card__inner">
+          <div class="photo-card__paper">
+            <img loading="lazy" decoding="async" src="groom.png" alt="Akhil – Groom" id="groom-img" />
+          </div>
+        </div>
+        <figcaption class="photo-card__caption">
+          <span class="photo-card__name">Akhil</span>
+          <span class="photo-card__role">The Groom</span>
+        </figcaption>
+      </figure>
 
-      <!-- AMPERSAND DIVIDER -->
-      <div class="couple-amp">
-        <span>&amp;</span>
-        <div class="amp-rings">
+      <!-- AMPERSAND -->
+      <div class="photo-wall__amp">
+        <span class="photo-wall__amp-text">&amp;</span>
+        <div class="photo-wall__rings">
           <!-- <div class="ring r1"></div> -->
           <!-- <div class="ring r2"></div> -->
         </div>
       </div>
 
       <!-- BRIDE -->
-      <div class="couple-card">
-        <img src="bride.png" alt="Athira – Bride" id="bride-img" class="couple-photo" />
-        <h3 class="couple-name">Athira</h3>
-        <p class="couple-role">The Bride</p>
-        <div class="couple-gold-line"></div>
-      </div>
+      <figure class="photo-card photo-card--lg"
+        style="--rot:2.4deg; --nudge-y:-14px; --scale:1.01; --drift-delay:.5s;">
+        <div class="photo-card__inner">
+          <div class="photo-card__paper">
+            <img loading="lazy" decoding="async" src="bride.png" alt="Athira – Bride" id="bride-img" />
+          </div>
+        </div>
+        <figcaption class="photo-card__caption">
+          <span class="photo-card__name">Athira</span>
+          <span class="photo-card__role">The Bride</span>
+        </figcaption>
+      </figure>
 
     </div>
   </section>
@@ -521,4 +534,5 @@
 </body>
 
 </html>
+
 
