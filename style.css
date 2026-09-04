@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════
+﻿/* ═══════════════════════════════════════════════════════════════
    WEDDING INVITATION – Farsana & Haseeb
    Color Palette:
      Royal Blue  → #1a3a6b / #1e4d8c / #2460b0
@@ -1245,8 +1245,22 @@ body {
     max-width: 340px;
   }
 
+  .couple-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+
   .couple-amp {
     font-size: 2.5rem;
+    order: 2;           /* sits between groom (order:1) and bride (order:3) */
+  }
+
+  .couple-card:first-of-type {
+    order: 1;
+  }
+
+  .couple-card:last-of-type {
+    order: 3;
   }
 
   .event-btns {
@@ -2275,3 +2289,73 @@ body.scroll-locked {
     max-width: 340px;
   }
 }
+
+/* ═══════════════════════════════════
+   COUPLE PHOTO FRAME
+═══════════════════════════════════ */
+.couple-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.couple-photo {
+  width: 220px;
+  height: 280px;
+  border-radius: 6px;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center top;
+  border: 8px solid #ffffff;
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(212, 175, 55, 0.2);
+  display: block;
+  transition: var(--transition);
+}
+
+.couple-photo:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(212, 175, 55, 0.35);
+}
+
+.couple-name {
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--blue-deep);
+  margin-top: 20px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.couple-role {
+  font-family: var(--font-caps);
+  font-size: 0.62rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin: 0;
+  text-align: center;
+}
+
+.couple-gold-line {
+  width: 48px;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .couple-photo {
+    width: 170px;
+    height: 220px;
+  }
+}
+
