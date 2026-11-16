@@ -20,8 +20,38 @@ const setMusic = on => {
   else { audio.pause(); playing = false; mBtn.querySelector('span').textContent = 'Music on'; }
 };
 mBtn.addEventListener('click', () => setMusic(!playing));
-const firstTouch = () => { if (!playing) setMusic(true); removeEventListener('pointerdown', firstTouch); };
-addEventListener('pointerdown', firstTouch);
+
+// Cover: open invitation + start song
+$('#openInvite').addEventListener('click', () => {
+  setMusic(true);
+  $('#cover').classList.add('opened');
+  document.body.classList.remove('locked');
+  scrollTo(0, 0);
+  setTimeout(() => $('#cover').remove(), 1200);
+});
+
+// Add to calendar
+const EVENTS = {
+  wedding:   { title: 'Akhil & Athira — Wedding', start: '20270124T050000Z', end: '20270124T055000Z',
+               loc: 'Ashirvad Lawns Convention Center, Eranhipalam, Kozhikode', desc: 'Muhurtham 10:30 AM – 11:20 AM' },
+  reception: { title: 'Akhil & Athira — Reception', start: '20270126T103000Z', end: '20270126T143000Z',
+               loc: 'Himaya Convention Center, Velliyoor', desc: 'Reception, 4:00 PM onwards' }
+};
+document.querySelectorAll('[data-cal]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  const ev = EVENTS[a.dataset.cal];
+  if (a.dataset.type === 'google') {
+    const q = new URLSearchParams({ action: 'TEMPLATE', text: ev.title, dates: `${ev.start}/${ev.end}`, details: ev.desc, location: ev.loc });
+    window.open(`https://calendar.google.com/calendar/render?${q}`, '_blank');
+  } else {
+    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AkhilAthira//Wedding//EN','BEGIN:VEVENT',
+      `UID:${a.dataset.cal}-akhil-athira-2027`,`DTSTAMP:${ev.start}`,`DTSTART:${ev.start}`,`DTEND:${ev.end}`,
+      `SUMMARY:${ev.title}`, `DESCRIPTION:${ev.desc}`, `LOCATION:${ev.loc.replace(/,/g, '\\,')}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    const dl = Object.assign(document.createElement('a'), { href: url, download: `${a.dataset.cal}.ics` });
+    document.body.appendChild(dl); dl.click(); dl.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+}));
 
 // Scratch card
 (function () {
@@ -77,7 +107,7 @@ document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () =
 }));
 
 // RSVP → WhatsApp
-$('#rsvpForm').addEventListener('submit', e => {
+$('#rsvpForm')?.addEventListener('submit', e => {
   e.preventDefault();
   const f = new FormData(e.target), evs = f.getAll('ev');
   if (!evs.length) return toast('Please select at least one celebration');
@@ -91,7 +121,8 @@ $('#rsvpForm').addEventListener('submit', e => {
 $('#shareBtn').addEventListener('click', async () => {
   const data = { title: 'Akhil & Athira — Wedding', text: 'You are invited to our wedding on 24 January 2027!', url: location.href };
   if (navigator.share) { try { await navigator.share(data); } catch (_) {} }
-  else { navigator.clipboard?.writeText(location.href); toast('Link copied'); }
+  else if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(() => toast('Link copied'), () => toast(location.href));
+  else window.open(`https://wa.me/?text=${encodeURIComponent(data.text + ' ' + data.url)}`, '_blank');
 });
 
 // Gallery lightbox
