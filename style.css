@@ -64,7 +64,7 @@ a{color:inherit}
 .fam-couple{font-family:var(--serif);font-style:italic;font-size:44px;color:var(--wine);line-height:1.1}
 .fam-couple:first-of-type{margin-top:24px}
 .fam-amp{font-family:var(--serif);font-size:26px;color:var(--gold)}
-.fam-sub{font-weight:600;font-size:13px;margin-top:10px}
+.fam-sub{font-weight:600;font-size:15px;line-height:1.5;margin-top:10px}
 
 .event-card{background:#fffaf2;border:1px solid var(--line);border-radius:24px;padding:34px 20px;margin-bottom:22px;box-shadow:0 12px 30px rgba(120,90,50,.1)}
 .chapter{display:inline-block;background:linear-gradient(90deg,var(--gold),#a57a3a);color:#fff;font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;padding:9px 22px;border-radius:20px}
